@@ -1,0 +1,31 @@
+﻿@implements IDisposable
+@inject StateContainer StateContainer
+
+<button @onclick="LogUsernameA">User A</button>
+<button @onclick="LogUsernameB">User B</button>
+
+<p>@_authMessage</p>
+
+@code {
+    private string _authMessage;
+
+    protected override void OnInitialized()
+    {
+        StateContainer.OnChange += StateHasChanged;
+    }
+
+    private void LogUsernameA()
+    {
+        _authMessage = StateContainer.Property = "A";
+    }
+
+    private void LogUsernameB()
+    {
+        _authMessage = StateContainer.Property = "B";
+    }
+
+    public void Dispose()
+    {
+        StateContainer.OnChange -= StateHasChanged;
+    }
+}
